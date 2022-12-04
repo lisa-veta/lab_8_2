@@ -16,8 +16,7 @@ namespace lab8_2
         static int start = 0;
         static void ReadData()
         {
-            
-            foreach (string str in File.ReadAllLines("D:\\УНИВЕР\\прога\\лб8\\8-2.txt"))
+            foreach (string str in File.ReadAllLines("D:\\УНИВЕР\\прога\\лб8\\8-22.txt"))
             {
                 if(start == 0)
                 {
@@ -37,50 +36,56 @@ namespace lab8_2
                     line.Date = long.Parse(stri[0].Replace(":", "").Replace("-", "").Replace(" ", ""));
                     line.Count = 0;
                     line.Operation = stri[1].Replace(" ", "");
-
                 }
                 billData.Add(line);
             }
+            billData.Sort(delegate (Bill x, Bill y) { return x.Date.CompareTo(y.Date); } );
         }
 
-        static void CheckData()
+        static int StartWork(string dateNow)
         {
-
-        }
-
-        static void StartWork()
-        {
-            Console.WriteLine("Введите херню");
-            string dateNow = Console.ReadLine();
             long str = long.Parse(dateNow.Replace(":", "").Replace("-", "").Replace(" ", ""));
             int billNow = start;
-            for(int i = 0; i < billData.Count-1; i++)
+
+            for (int i = 0; i < billData.Count; i++)
             {
-                if (str > billData[i].Date)
+                if (str >= billData[i].Date)
                 {
-                    if (billData[i].Operation == "in")
+                    switch (billData[i].Operation)
                     {
-                        billNow += billData[i].Count;
-                    }
-                    else if (billData[i].Operation == "out")
-                    {
-                        billNow -= billData[i].Count;
-                    }
-                    else if (billData[i].Operation == "revert")
-                    {
-                        
+                        case "in":
+                            billNow += billData[i].Count;
+                            break;
+                        case "out":
+                            billNow -= billData[i].Count;
+                            break;
+                        case "revert":
+                            billNow = Revert(billData[i - 1].Count, billData[i - 1].Operation, billNow);
+                            break;
                     }
                 }
             }
-            Console.WriteLine(billNow);
-
+            return billNow;
         }
 
+        static int Revert(int count, string operation, int billNow)
+        {
+            if (operation == "in")
+                return billNow - count;
+            else
+                return billNow + count;
+        }
         
         static void Main()
         {
             ReadData();
-            StartWork();
+            Console.Write("Enter the date: ");
+            string dateNow = Console.ReadLine();
+            int bill = StartWork(dateNow);
+            if (bill >= 0)
+                Console.WriteLine($"\nАccount balance: {bill}");
+            else
+                Console.WriteLine("Invalid data in file");
         }
     }
 }
