@@ -105,32 +105,47 @@ namespace lab8_2
             }
         }
 
-        static bool CheckDate(string dateNow)
+        static bool CheckInput(string dateNow)
         {
             string[] check = dateNow.Split(' ');
             int count = check[0].Length - check[0].Replace("-", "").Length;
 
-            if (!(count == 2 && check[1].Contains(":")))
+            if (!(count == 2 && check[1].Contains(":") && check[0].Length == 10 && check[1].Length == 5))
                 return false;
             
             string[] date = check[0].Split('-');
             string[] time = check[1].Split(':');
 
+            if (!(CheckDate(date) || CheckTime(time)))
+                return false;
+            return true;
+        }
+
+        static bool CheckDate(string[] date)
+        {
             foreach (string d in date)
                 if (!int.TryParse(d, out int number))
-                    return false;
-
-            foreach (string t in time)
-                if (!int.TryParse(t, out int number))
                     return false;
 
             int year = Convert.ToInt32(date[0]);
             int mounth = Convert.ToInt32(date[1]);
             int day = Convert.ToInt32(date[2]);
-            int hour = Convert.ToInt32(time[0]);
-            int minuts = Convert.ToInt32(time[1]);
 
-            if ((year >= 2000 && year <= 2022) && (mounth >= 1 && mounth <= 12) && (day >= 1 && day <= 31) && (hour >= 0 && hour <= 23) && (minuts >= 0 && minuts <= 59))
+            if ((year >= 2000 && year <= 2022) && (mounth >= 1 && mounth <= 12) && (day >= 1 && day <= 31))
+                return true;
+            else
+                return false;
+        }
+        static bool CheckTime(string[] time)
+        {
+            foreach (string t in time)
+                if (!int.TryParse(t, out int number))
+                    return false;
+
+            int hour = Convert.ToInt32(time[0]);
+            int minutes = Convert.ToInt32(time[1]);
+
+            if ((hour >= 00 && hour <= 23) && (minutes >= 0 && minutes <= 59))
                 return true;
             else
                 return false;
@@ -141,9 +156,9 @@ namespace lab8_2
             while(true)
             {
                 Console.Write("Enter the date in the format yyyy-mm-dd hh:mm: ");
-                string dateNow = Console.ReadLine();
+                string dateNow = Console.ReadLine().Trim(' ');
                 
-                if (!CheckDate(dateNow))
+                if (!CheckInput(dateNow))
                 {
                     Console.WriteLine("\nInvalid date, try again\n");
                     continue;
@@ -161,5 +176,6 @@ namespace lab8_2
             }
             
         }
+
     }
 }
