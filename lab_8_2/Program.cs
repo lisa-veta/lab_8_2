@@ -172,13 +172,7 @@ namespace lab8_2
                 }
 
                 bill = StartWork(dateNow);
-                if (bill >= 0)
-                    Console.WriteLine($"\nАccount balance as of {dateNow}: {bill}\n");
-                else
-                {
-                    throw new Exception("Invalid data in file");
-                }
-                    
+                Console.WriteLine($"\nАccount balance as of {dateNow}: {bill}\n");
             }
             
         }
