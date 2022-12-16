@@ -136,6 +136,7 @@ namespace lab8_2
             else
                 return false;
         }
+
         static bool CheckTime(string[] time)
         {
             foreach (string t in time)
