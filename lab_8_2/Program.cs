@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Data;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
@@ -154,7 +155,12 @@ namespace lab8_2
 
         static void Main()
         {
-            while(true)
+            ReadData();
+            int bill = StartWork("2022-12-31 23:59");
+            if (bill <= 0)
+                throw new Exception("Invalid data in file");
+
+            while (true)
             {
                 Console.Write("Enter the date in the format yyyy-mm-dd hh:mm: ");
                 string dateNow = Console.ReadLine().Trim(' ');
@@ -165,8 +171,7 @@ namespace lab8_2
                     continue;
                 }
 
-                ReadData();
-                int bill = StartWork(dateNow);
+                bill = StartWork(dateNow);
                 if (bill >= 0)
                     Console.WriteLine($"\nАccount balance as of {dateNow}: {bill}\n");
                 else
