@@ -47,12 +47,12 @@ namespace lab8_2
 
         static int StartWork(string dateNow)
         {
-            long entereDate = long.Parse(dateNow.Replace(":", "").Replace("-", "").Replace(" ", ""));
+            long enterDate = long.Parse(dateNow.Replace(":", "").Replace("-", "").Replace(" ", ""));
             int billNow = start;
 
             for (int i = 0; i < billData.Count; i++)
             {
-                if (entereDate >= billData[i].Date)
+                if (enterDate >= billData[i].Date)
                 {
                     switch (billData[i].Operation)
                     {
