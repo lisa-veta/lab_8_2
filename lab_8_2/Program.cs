@@ -6,12 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace lab8_2
 {
-    class Bill
-    {
-        public long Date { get; set; }
-        public int Count { get; set; }
-        public string Operation { get; set; }
-    }
     class Programm
     {
         static List<Bill> billData = new List<Bill>();
@@ -63,6 +57,7 @@ namespace lab8_2
             }
             return billData;
         }
+
         static int StartWork(string dateNow)
         {
             long enterDate = long.Parse(dateNow.Replace(":", "").Replace("-", "").Replace(" ", ""));
@@ -83,6 +78,8 @@ namespace lab8_2
                         case "revert":
                             billNow = Revert(billData[i - 1].Count, billData[i - 1].Operation, billNow);
                             break;
+                        default:
+                            throw new Exception("Invalid data in file");
                     }
                 }
             }
@@ -132,6 +129,7 @@ namespace lab8_2
             int day = Convert.ToInt32(date[2]);
             int hour = Convert.ToInt32(time[0]);
             int minuts = Convert.ToInt32(time[1]);
+
             if ((year > 1999 && year < 2023) && (mounth > 0 && mounth < 13) && (day > 0 && day < 32) && (hour > -1 && hour < 25) && (minuts > -1 && minuts < 60))
                 return true;
             else
@@ -147,13 +145,13 @@ namespace lab8_2
 
                 if (!CheckDate(dateNow))
                 {
-                    Console.WriteLine("\nInvalid date\n");
+                    Console.WriteLine("\nInvalid date, try again\n");
                     continue;
                 }
                 ReadData();
                 int bill = StartWork(dateNow);
                 if (bill >= 0)
-                    Console.WriteLine($"\nАccount balance as of {dateNow}: {bill}");
+                    Console.WriteLine($"\nАccount balance as of {dateNow}: {bill}\n");
                 else
                 {
                     throw new Exception("Invalid data in file");
