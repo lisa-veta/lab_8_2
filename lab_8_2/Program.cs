@@ -130,7 +130,7 @@ namespace lab8_2
             int hour = Convert.ToInt32(time[0]);
             int minuts = Convert.ToInt32(time[1]);
 
-            if ((year > 1999 && year < 2023) && (mounth > 0 && mounth < 13) && (day > 0 && day < 32) && (hour > -1 && hour < 25) && (minuts > -1 && minuts < 60))
+            if ((year >= 2000 && year <= 2022) && (mounth >= 1 && mounth <= 12) && (day >= 1 && day <= 31) && (hour >= 0 && hour <= 23) && (minuts >= 0 && minuts <= 59))
                 return true;
             else
                 return false;
@@ -142,12 +142,13 @@ namespace lab8_2
             {
                 Console.Write("Enter the date in the format yyyy-mm-dd hh:mm: ");
                 string dateNow = Console.ReadLine();
-
+                
                 if (!CheckDate(dateNow))
                 {
                     Console.WriteLine("\nInvalid date, try again\n");
                     continue;
                 }
+
                 ReadData();
                 int bill = StartWork(dateNow);
                 if (bill >= 0)
