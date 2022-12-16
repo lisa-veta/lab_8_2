@@ -24,22 +24,22 @@ namespace lab8_2
                     continue;
                 }
 
-                Bill BillLine = new Bill();
+                Bill billLine = new Bill();
                 string[] line = str.Split('|');
 
                 if (line.Length > 2)
                 {
-                    BillLine.Date = long.Parse(line[0].Replace(":", "").Replace("-", "").Replace(" ", ""));
-                    BillLine.Count = int.Parse(line[1].Trim(' '));
-                    BillLine.Operation = line[2].Replace(" ", "");
+                    billLine.Date = long.Parse(line[0].Replace(":", "").Replace("-", "").Replace(" ", ""));
+                    billLine.Count = int.Parse(line[1].Trim(' '));
+                    billLine.Operation = line[2].Replace(" ", "");
                 }
                 else
                 {
-                    BillLine.Date = long.Parse(line[0].Replace(":", "").Replace("-", "").Replace(" ", ""));
-                    BillLine.Count = 0;
-                    BillLine.Operation = line[1].Replace(" ", "");
+                    billLine.Date = long.Parse(line[0].Replace(":", "").Replace("-", "").Replace(" ", ""));
+                    billLine.Count = 0;
+                    billLine.Operation = line[1].Replace(" ", "");
                 }
-                billData.Add(BillLine);
+                billData.Add(billLine);
             }
 
             billData.Sort(delegate (Bill x, Bill y) { return x.Date.CompareTo(y.Date); } );
